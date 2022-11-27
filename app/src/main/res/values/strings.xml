@@ -6,8 +6,20 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="notification">Уведомления</string>
+    <string name="settings">Настройки</string>
+    <string name="my_classes">Мои классы</string>
+    <string name="exit">Выход</string>
+    <string name="students">Ученики</string>
+    <string name="default_name">Мария Синицина</string>
+    <string name="N">Н</string>
+    <string name="breakfast">Завтрак</string>
+    <string name="dinner">Обед</string>
+    <string name="afternoon_snack">Полдник</string>
+    <string name="send_apply">Отправить заявку</string>
+    <string name="meal_schedule">Расписание питания</string>
+    <string name="list_class">Список класса</string>
 </resources>
