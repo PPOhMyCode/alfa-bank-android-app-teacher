@@ -18,6 +18,7 @@ import com.example.alfa_bank_android_app_teacher.databinding.ActivitySchoolClass
 import com.example.alfa_bank_android_app_teacher.domain.entities.SchoolClass
 import com.example.alfa_bank_android_app_teacher.domain.entities.Student
 import com.example.alfa_bank_android_app_teacher.ui.adapters.StudentsListAdapter
+import com.example.alfa_bank_android_app_teacher.ui.child.ChildActivity
 
 class SchoolClassActivity : AppCompatActivity() {
     private lateinit var _binding: ActivitySchoolClassBinding
@@ -63,9 +64,15 @@ class SchoolClassActivity : AppCompatActivity() {
 
     private fun initializeRecyclerView(students: List<Student>) {
         val studentsListAdapter = StudentsListAdapter(students)
+
+        studentsListAdapter.onItemClick ={
+            startActivity(ChildActivity.newIntent(this))
+        }
+
         _binding.studentsRecyclerView.adapter = studentsListAdapter
         _binding.studentsRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
     }
 
 

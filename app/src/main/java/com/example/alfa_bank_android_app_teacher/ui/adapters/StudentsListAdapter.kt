@@ -40,15 +40,17 @@ class StudentsListAdapter(var students: List<Student>) :
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val student = students[position]
         initializeCardView(holder, student)
+
         holder.itemView.setOnClickListener {
-            Log.d(
-                "Tag",students.toString()
-            )
+            // Log.d(
+            //     "Tag",students.toString()
+            // )
+
             onItemClick?.invoke(student)
 
-            students[position].isChecked = !student.isChecked
+            //students[position].isChecked = !student.isChecked
 
-            holder.checkBox.isChecked=students[position].isChecked
+            //holder.checkBox.isChecked=students[position].isChecked
             //notifyItemChanged(position)
         }
     }

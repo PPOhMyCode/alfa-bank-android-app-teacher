@@ -36,6 +36,8 @@
              android:theme="@style/Theme.Alfabankandroidappteacher.NoActionBar" />
         <activity android:name=".ui.authentication.AuthenticationFragment"
             android:theme="@style/Theme.Alfabankandroidappteacher.NoActionBar" />
+        <activity android:name=".ui.child.ChildActivity"
+            android:theme="@style/Theme.Alfabankandroidappteacher.NoActionBar" />
     </application>
 
 </manifest>
