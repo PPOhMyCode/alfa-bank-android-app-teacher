@@ -2,11 +2,14 @@ package com.example.alfa_bank_android_app_teacher
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.example.alfa_bank_android_app_teacher.data.preferences.PreferencesUserImpl
 import com.example.alfa_bank_android_app_teacher.databinding.ActivityMainBinding
+import com.example.alfa_bank_android_app_teacher.ui.authentication.AuthenticationFragment
 import com.example.alfa_bank_android_app_teacher.ui.classes.ClassesFragment
 import com.example.alfa_bank_android_app_teacher.ui.notification.NotificationFragment
 import com.example.alfa_bank_android_app_teacher.ui.setting.SettingFragment
@@ -18,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -27,6 +31,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        with(binding.navView.getHeaderView(0)) {
+            findViewById<TextView>(R.id.firstName).text=PreferencesUserImpl(application).user?.firstName
+            findViewById<TextView>(R.id.lastName).text=PreferencesUserImpl(application).user?.lastName
+        }
     }
 
     private fun initializeNavigation() {
@@ -37,11 +45,11 @@ class MainActivity : AppCompatActivity() {
                     binding.appBarMain.toolbarTitle.text = "Мои дети"
                     true
                 }
-                R.id.notification -> {
-                    goToFragment(NotificationFragment())
-                    binding.appBarMain.toolbarTitle.text = "Уведомления"
-                    true
-                }
+               // R.id.notification -> {
+               //     goToFragment(NotificationFragment())
+               //     binding.appBarMain.toolbarTitle.text = "Уведомления"
+               //     true
+               // }
                 R.id.settings -> {
                     goToFragment(SettingFragment())
                     binding.appBarMain.toolbarTitle.text = "Настройки"
@@ -50,7 +58,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.exit -> {
                     lifecycleScope.launch(context = Dispatchers.Main){
                         delay(20)
-                        binding.drawerLayout.closeDrawer(GravityCompat.START)
+                        startActivity(AuthenticationFragment.getAuthenticationIntent(applicationContext))
+                        finish()
                     }
                     true
                 }

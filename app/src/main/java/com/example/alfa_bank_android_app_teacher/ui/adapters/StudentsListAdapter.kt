@@ -1,9 +1,12 @@
 package com.example.alfa_bank_android_app_teacher.ui.adapters
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alfa_bank_android_app_teacher.R
@@ -13,11 +16,18 @@ import com.google.android.material.card.MaterialCardView
 
 class StudentsListAdapter(var students: List<Student>) :
     RecyclerView.Adapter<StudentsListAdapter.ItemHolder>() {
+
     var onItemClick: ((Student) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_children, parent, false)
+        val view = when (viewType) {
+            IS_CHECKED -> LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_children_checked, parent, false)
+            IS_NOT_CHECKED -> LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_children, parent, false)
+            else -> throw Exception()
+        }
+
         return ItemHolder(view)
     }
 
@@ -31,7 +41,22 @@ class StudentsListAdapter(var students: List<Student>) :
         val student = students[position]
         initializeCardView(holder, student)
         holder.itemView.setOnClickListener {
+            Log.d(
+                "Tag",students.toString()
+            )
             onItemClick?.invoke(student)
+
+            students[position].isChecked = !student.isChecked
+
+            holder.checkBox.isChecked=students[position].isChecked
+            //notifyItemChanged(position)
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (students[position].isChecked) {
+            true -> IS_CHECKED
+            else -> IS_NOT_CHECKED
         }
     }
 
@@ -43,8 +68,10 @@ class StudentsListAdapter(var students: List<Student>) :
         var afternoonSnackMaterialCardView: MaterialCardView =
             itemView.findViewById(R.id.afternoonSnackMaterialCardView)
         var iLLMaterialCardView: MaterialCardView = itemView.findViewById(R.id.iLLMaterialCardView)
+        var checkBox: CheckBox = itemView.findViewById(R.id.checkBox)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initializeCardView(holder: ItemHolder, student: Student) {
         with(student) {
             holder.nameTextView.text = "$firstName $lastName"
@@ -69,6 +96,11 @@ class StudentsListAdapter(var students: List<Student>) :
             else
                 holder.iLLMaterialCardView.visibility = View.GONE
         }
+    }
+
+    companion object {
+        private const val IS_CHECKED = 1
+        private const val IS_NOT_CHECKED = 0
     }
 
 }

@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.alfa_bank_android_app_teacher.R
 import com.example.alfa_bank_android_app_teacher.databinding.FragmentClassesBinding
+import com.example.alfa_bank_android_app_teacher.domain.entities.SchoolClass
 import com.example.alfa_bank_android_app_teacher.ui.adapters.ClassesListAdapter
 import com.example.alfa_bank_android_app_teacher.ui.schoolclass.SchoolClassActivity
 import com.google.android.material.divider.MaterialDividerItemDecoration
@@ -30,30 +33,38 @@ class ClassesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this)[ClassesViewModel::class.java]
-
         _binding = FragmentClassesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //binding.childrenRecyclerView.adapter
-        val childListAdapter = ClassesListAdapter(viewModel.loadSchoolClass())
+
+        viewModel.loadSchoolClass()
+        viewModel.schoolClasses.observe(requireActivity()) {
+            it?.let {
+                initializeRecyclerView(it)
+                view.findViewById<ProgressBar>(R.id.progressBar3)?.visibility=View.GONE
+            }
+        }
+    }
+
+    private fun initializeRecyclerView(classes: List<SchoolClass>) {
+        val childListAdapter = ClassesListAdapter(classes)
         childListAdapter.onItemClick = {
             with(requireActivity()) {
-                startActivity(SchoolClassActivity.newIntent(this,it))
+                val intent =SchoolClassActivity.newIntent(this, it)
+                intent.putExtra("Id",it.gradeId)
+                startActivity(intent)
                 finish()
-            }//viewModel.preferences.userChild = it
-            //val intent = ChildActivity.newIntent(requireActivity(), it)
-            //requireActivity().startActivity(intent)
-            //requireActivity().finish()
+            }
         }
+
         val divider = MaterialDividerItemDecoration(
             requireActivity(),
-            LinearLayoutManager.VERTICAL /*or LinearLayoutManager.HORIZONTAL*/
+            LinearLayoutManager.VERTICAL
         )
+
         divider.isLastItemDecorated = false
         with(binding.childrenRecyclerView) {
             adapter = childListAdapter

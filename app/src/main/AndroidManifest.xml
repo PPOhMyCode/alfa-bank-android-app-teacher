@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.alfa_bank_android_app_teacher">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,7 +16,7 @@
         android:theme="@style/Theme.Alfabankandroidappteacher"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.splashscreen.SplashScreenFragment"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Alfabankandroidappteacher.NoActionBar">
@@ -26,6 +28,13 @@
         </activity>
         <activity
             android:name=".ui.schoolclass.SchoolClassActivity"
+            android:theme="@style/Theme.Alfabankandroidappteacher.NoActionBar" />
+        <activity android:name=".MainActivity"
+            android:theme="@style/Theme.Alfabankandroidappteacher.NoActionBar"
+            />
+         <activity android:name=".ui.authorization.AuthorizationFragment"
+             android:theme="@style/Theme.Alfabankandroidappteacher.NoActionBar" />
+        <activity android:name=".ui.authentication.AuthenticationFragment"
             android:theme="@style/Theme.Alfabankandroidappteacher.NoActionBar" />
     </application>
 

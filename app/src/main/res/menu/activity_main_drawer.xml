@@ -10,10 +10,6 @@
             android:icon="@drawable/ic_people"
             android:title="@string/my_classes" />
         <item
-            android:id="@+id/notification"
-            android:icon="@drawable/ic_notification"
-            android:title="@string/notification" />
-        <item
             android:id="@+id/settings"
             android:icon="@drawable/ic_setting_2"
             android:title="@string/settings" />

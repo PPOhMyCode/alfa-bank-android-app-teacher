@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_classes">
+    app:startDestination="@id/nav_classes">
 
     <fragment
         android:id="@+id/nav_classes"
@@ -22,4 +22,14 @@
         android:name="com.example.alfa_bank_android_app_teacher.ui.setting.SettingFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/authorizationFragment"
+        android:name="com.example.alfa_bank_android_app_teacher.ui.authorization.AuthorizationFragment"
+        android:label="fragment_authorization"
+        tools:layout="@layout/fragment_authorization" />
+    <fragment
+        android:id="@+id/shedulerFragment"
+        android:name="com.example.alfa_bank_android_app_teacher.ui.sheduler.ShedulerFragment"
+        android:label="fragment_sheduler"
+        tools:layout="@layout/fragment_sheduler" />
 </navigation>

@@ -22,4 +22,10 @@
     <string name="send_apply">Отправить заявку</string>
     <string name="meal_schedule">Расписание питания</string>
     <string name="list_class">Список класса</string>
+    <string name="input_password">Введите пароль</string>
+    <string name="input_login">Введите логин</string>
+    <string name="logIn">Войти</string>
+    <string name="input_pin">Введите pin-code</string>
+    <string name="input_second_time_pin">Введите pin-code повторно</string>
+    <string name="one">1</string>
 </resources>

@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class SchoolClass(
+    var gradeId:String,
     var schoolClass: String,
     var school: String,
 ):Parcelable
