@@ -92,6 +92,14 @@ class DishListAdapter(var mode:String) : RecyclerView.Adapter<DishListAdapter.It
             holder.deleteDish.visibility = View.GONE
             holder.addDish.visibility = View.GONE
         }
+        if(mode == "mode3"){
+            holder.deleteDish.visibility = View.GONE
+            holder.addDish.visibility = View.VISIBLE
+        }
+        if(mode == "mode2"){
+            holder.deleteDish.visibility = View.VISIBLE
+            holder.addDish.visibility = View.GONE
+        }
         //holder.countAndCostInformation.visibility = View.GONE
         //holder.addDish.visibility = View.GONE
 

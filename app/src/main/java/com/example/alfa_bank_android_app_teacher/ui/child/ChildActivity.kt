@@ -10,6 +10,7 @@ import com.example.alfa_bank_android_app_teacher.databinding.ActivitySchoolClass
 import com.example.alfa_bank_android_app_teacher.domain.entities.Dish
 import com.example.alfa_bank_android_app_teacher.domain.entities.SchoolClass
 import com.example.alfa_bank_android_app_teacher.ui.adapters.DishListAdapter
+import com.example.alfa_bank_android_app_teacher.ui.editdish.EditDishActivity
 import com.example.alfa_bank_android_app_teacher.ui.schoolclass.SchoolClassActivity
 
 class ChildActivity : AppCompatActivity() {
@@ -93,6 +94,11 @@ class ChildActivity : AppCompatActivity() {
         }
 
         _binding.recyclerView
+
+        _binding.breakfast.setOnClickListener {
+            startActivity(Intent(this,EditDishActivity::class.java))
+            finish()
+        }
 
     }
 

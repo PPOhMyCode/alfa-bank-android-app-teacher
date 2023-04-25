@@ -38,6 +38,8 @@
             android:theme="@style/Theme.Alfabankandroidappteacher.NoActionBar" />
         <activity android:name=".ui.child.ChildActivity"
             android:theme="@style/Theme.Alfabankandroidappteacher.NoActionBar" />
+        <activity android:name=".ui.editdish.EditDishActivity"
+            android:theme="@style/Theme.Alfabankandroidappteacher.NoActionBar" />
     </application>
 
 </manifest>
