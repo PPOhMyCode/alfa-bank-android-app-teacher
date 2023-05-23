@@ -8,6 +8,7 @@ import com.example.alfa_bank_android_app_teacher.domain.entities.SchoolClass
 import com.example.alfa_bank_android_app_teacher.domain.entities.Student
 import com.example.alfa_bank_android_app_teacher.domain.entities.User
 import com.google.gson.Gson
+import kotlin.random.Random
 
 class TeacherMapper {
 
@@ -21,15 +22,17 @@ class TeacherMapper {
     }
 
     fun mapStudentDtoToStudent(studentDto: StudentDto): Student {
+        val isEat = true
         return Student(
             studentDto.ChildrenId.toString(),
             studentDto.FirstName,
             studentDto.SecondName,
             isIll = false,
-            isEatBreakfast = true,
-            isEatDinner = true,
-            isEatAfternoonSnack = true,
-            isChecked = false
+            isEatBreakfast = isEat,
+            isEatDinner = isEat,
+            isEatAfternoonSnack = isEat,
+            isChecked = false,
+            isNotEat = !isEat
         )
     }
 }

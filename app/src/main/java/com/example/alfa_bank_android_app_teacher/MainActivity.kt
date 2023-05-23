@@ -50,11 +50,11 @@ class MainActivity : AppCompatActivity() {
                //     binding.appBarMain.toolbarTitle.text = "Уведомления"
                //     true
                // }
-                R.id.settings -> {
-                    goToFragment(SettingFragment())
-                    binding.appBarMain.toolbarTitle.text = "Настройки"
-                    true
-                }
+               // R.id.settings -> {
+               //     goToFragment(SettingFragment())
+               //     binding.appBarMain.toolbarTitle.text = "Настройки"
+               //     true
+               // }
                 R.id.exit -> {
                     lifecycleScope.launch(context = Dispatchers.Main){
                         delay(20)

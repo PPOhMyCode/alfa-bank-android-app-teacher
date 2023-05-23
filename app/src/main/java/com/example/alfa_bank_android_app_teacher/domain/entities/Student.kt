@@ -12,5 +12,6 @@ data class Student(
     var isEatBreakfast:Boolean,
     var isEatDinner:Boolean,
     var isEatAfternoonSnack:Boolean,
-    var isChecked:Boolean
+    var isChecked:Boolean,
+    var isNotEat:Boolean,
 ) : Parcelable

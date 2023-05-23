@@ -8,11 +8,7 @@
         <item
             android:id="@+id/children"
             android:icon="@drawable/ic_people"
-            android:title="@string/my_classes" />
-        <item
-            android:id="@+id/settings"
-            android:icon="@drawable/ic_setting_2"
-            android:title="@string/settings" />
+            android:title="@string/my_classes" />>
     </group>
 
     <group android:id="@+id/secondMenu"

@@ -18,11 +18,12 @@ class StudentsListAdapter(var students: List<Student>) :
     RecyclerView.Adapter<StudentsListAdapter.ItemHolder>() {
 
     var onItemClick: ((Student) -> Unit)? = null
+    var onCheckBoxClick: ((isEat:Boolean,Student) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val view = when (viewType) {
             IS_CHECKED -> LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_children_checked, parent, false)
+                .inflate(R.layout.item_children, parent, false)
             IS_NOT_CHECKED -> LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_children, parent, false)
             else -> throw Exception()
@@ -41,10 +42,15 @@ class StudentsListAdapter(var students: List<Student>) :
         val student = students[position]
         initializeCardView(holder, student)
 
+        holder.checkBox.setOnCheckedChangeListener{buttonView, isChecked ->
+            onCheckBoxClick?.invoke(isChecked,student)
+        }
+
         holder.itemView.setOnClickListener {
             // Log.d(
             //     "Tag",students.toString()
             // )
+
 
             onItemClick?.invoke(student)
 
@@ -70,6 +76,7 @@ class StudentsListAdapter(var students: List<Student>) :
         var afternoonSnackMaterialCardView: MaterialCardView =
             itemView.findViewById(R.id.afternoonSnackMaterialCardView)
         var iLLMaterialCardView: MaterialCardView = itemView.findViewById(R.id.iLLMaterialCardView)
+        val doesNotEatMaterialCardView: MaterialCardView = itemView.findViewById(R.id.doesnotEatMaterialCardView)
         var checkBox: CheckBox = itemView.findViewById(R.id.checkBox)
     }
 
@@ -97,6 +104,13 @@ class StudentsListAdapter(var students: List<Student>) :
                 holder.iLLMaterialCardView.visibility = View.VISIBLE
             else
                 holder.iLLMaterialCardView.visibility = View.GONE
+
+            if(isNotEat)
+                holder.doesNotEatMaterialCardView.visibility = View.VISIBLE
+            else
+                holder.doesNotEatMaterialCardView.visibility = View.GONE
+
+            holder.checkBox.isChecked = isChecked
         }
     }
 

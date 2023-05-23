@@ -9,8 +9,11 @@ import com.example.alfa_bank_android_app_teacher.databinding.ActivityChildBindin
 import com.example.alfa_bank_android_app_teacher.databinding.ActivitySchoolClassBinding
 import com.example.alfa_bank_android_app_teacher.domain.entities.Dish
 import com.example.alfa_bank_android_app_teacher.domain.entities.SchoolClass
+import com.example.alfa_bank_android_app_teacher.domain.entities.Student
+import com.example.alfa_bank_android_app_teacher.domain.entities.TypeMeal
 import com.example.alfa_bank_android_app_teacher.ui.adapters.DishListAdapter
 import com.example.alfa_bank_android_app_teacher.ui.editdish.EditDishActivity
+import com.example.alfa_bank_android_app_teacher.ui.noteatchild.NotEatChildActivity
 import com.example.alfa_bank_android_app_teacher.ui.schoolclass.SchoolClassActivity
 
 class ChildActivity : AppCompatActivity() {
@@ -21,6 +24,7 @@ class ChildActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityChildBinding.inflate(layoutInflater)
         setContentView(_binding.root)
+        initialize()
 
         val gridLayoutManager = GridLayoutManager(this, 2)
 
@@ -69,6 +73,8 @@ class ChildActivity : AppCompatActivity() {
             false
         }
 
+        _binding.recyclerView.isNestedScrollingEnabled = false
+
         val gridLayoutManager2 = GridLayoutManager(this, 2)
 
         val dishListAdapter2 = DishListAdapter("mode1")
@@ -80,6 +86,8 @@ class ChildActivity : AppCompatActivity() {
             layoutManager = gridLayoutManager2
             false
         }
+
+        _binding.recyclerView2.isNestedScrollingEnabled = false
 
         val gridLayoutManager3 = GridLayoutManager(this, 2)
 
@@ -93,18 +101,54 @@ class ChildActivity : AppCompatActivity() {
             false
         }
 
-        _binding.recyclerView
+        _binding.recyclerView3.isNestedScrollingEnabled = false
 
         _binding.breakfast.setOnClickListener {
-            startActivity(Intent(this,EditDishActivity::class.java))
-            finish()
+
+            intent.getParcelableExtra<Student>(Student)?.let { student->
+                startActivity(EditDishActivity.newIntent(this,student,TypeMeal.BREAKFAST))
+                finish()
+            }
+        }
+
+        _binding.dinner.setOnClickListener {
+
+            intent.getParcelableExtra<Student>(Student)?.let { student->
+                startActivity(EditDishActivity.newIntent(this,student,TypeMeal.DINNER))
+                finish()
+            }
+        }
+
+        _binding.snack.setOnClickListener {
+
+            intent.getParcelableExtra<Student>(Student)?.let { student->
+                startActivity(EditDishActivity.newIntent(this,student,TypeMeal.SNACK))
+                finish()
+            }
         }
 
     }
 
+    private fun initialize(){
+        intent.getParcelableExtra<Student>(Student)?.let { student->
+            _binding.toolbarTitle.text = "${student.firstName} ${student.lastName}"
+        }
+        _binding.buttonNav.setOnClickListener {
+            intent.getParcelableExtra<SchoolClass>(SchoolClass)?.let { schoolClass ->
+                startActivity(SchoolClassActivity.newIntent(this, schoolClass))
+                finish()
+            }
+        }
+    }
+
     companion object {
-        fun newIntent(packageContext: Context): Intent {
-            val intent = Intent(packageContext, ChildActivity::class.java)
+        private const val SchoolClass = "SchoolClass"
+        private const val Student = "Student"
+        fun newIntent(packageContext: Context, student: Student, schoolClass: SchoolClass): Intent {
+            val intent = Intent(packageContext, ChildActivity::class.java).apply {
+                putExtra(SchoolClass,schoolClass)
+                putExtra(Student,student)
+            }
             return intent
         }
     }

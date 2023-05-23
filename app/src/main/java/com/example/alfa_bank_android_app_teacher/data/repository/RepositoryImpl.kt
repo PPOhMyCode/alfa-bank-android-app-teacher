@@ -2,6 +2,7 @@ package com.example.alfa_bank_android_app_teacher.data.repository
 
 import android.app.appsearch.StorageInfo
 import android.content.Context
+import android.graphics.Insets.add
 import android.widget.Toast
 import com.example.alfa_bank_android_app_teacher.data.PreferencesImpl
 import com.example.alfa_bank_android_app_teacher.data.mapper.TeacherMapper
@@ -41,9 +42,20 @@ class RepositoryImpl(var context:Context) : Repository {
     }
 
     override suspend fun loadStudents(grade:String): List<Student>? {
-        return apiService.loadStudents(grade).map {
+        val students = apiService.loadStudents(grade).map {
             mapper.mapStudentDtoToStudent(it)
-        }
+        }.toMutableList()
+        //TODO("Убрать")
+        students.add(
+            students.last().copy(
+                isEatBreakfast = false,
+                isEatDinner = false,
+                isEatAfternoonSnack = false,
+                isNotEat = true
+            )
+        )
+
+        return students
     }
 
     override suspend fun confirmOrder(date: String, childrenId: String) {

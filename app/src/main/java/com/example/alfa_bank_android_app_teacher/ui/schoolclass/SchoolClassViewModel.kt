@@ -1,8 +1,10 @@
 package com.example.alfa_bank_android_app_teacher.ui.schoolclass
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.example.alfa_bank_android_app_teacher.data.repository.RepositoryImpl
 import com.example.alfa_bank_android_app_teacher.domain.CancelOrderUseCase
@@ -24,13 +26,53 @@ class SchoolClassViewModel(application: Application) : AndroidViewModel(applicat
     var students = MutableLiveData<List<Student>?>()
     var status = MutableLiveData<String>()
 
+    private var eatStudents = mutableListOf<Student>()
+
     fun loadStudents(grade: String) {
         viewModelScope.launch {
             students.value = loadStudentsUseCase(grade)
         }
     }
 
+    fun addStudent(student: Student){
+        eatStudents.add(student)
+    }
+
+    fun removeStudent(student: Student){
+        eatStudents.removeIf {
+            it.id == student.id
+        }
+    }
+
+    fun addAllStudent(){
+
+        eatStudents = mutableListOf()
+
+        students.value?.let {
+            eatStudents.addAll(
+                it
+            )
+        }
+
+        students.value = students.value?.map {
+            it.copy(
+                isChecked = true
+            )
+        }
+    }
+
+    fun removeAllStudent(){
+        eatStudents = mutableListOf()
+
+        students.value = students.value?.map {
+            it.copy(
+                isChecked = false
+            )
+        }
+    }
+
     fun makeOrder(students: List<Student>){
+        //TODO("Переделать на eatStudent")
         try {
             viewModelScope.launch {
                 for (student in students) {
@@ -40,7 +82,7 @@ class SchoolClassViewModel(application: Application) : AndroidViewModel(applicat
                         cancelOrderUseCase.invoke("2022-12-19", student.id)
                 }
             }
-            status.value="Заявка отправлена"
+            status.value="Заявки. Отправлено ${eatStudents.size}"
         } catch (e: Exception) {
             status.value="Ошибка"
         }

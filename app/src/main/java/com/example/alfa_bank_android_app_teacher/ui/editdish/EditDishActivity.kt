@@ -1,12 +1,18 @@
 package com.example.alfa_bank_android_app_teacher.ui.editdish
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.alfa_bank_android_app_teacher.databinding.ActivityChildBinding
 import com.example.alfa_bank_android_app_teacher.databinding.ActivityEditOrderBinding
 import com.example.alfa_bank_android_app_teacher.domain.entities.Dish
+import com.example.alfa_bank_android_app_teacher.domain.entities.SchoolClass
+import com.example.alfa_bank_android_app_teacher.domain.entities.Student
+import com.example.alfa_bank_android_app_teacher.domain.entities.TypeMeal
 import com.example.alfa_bank_android_app_teacher.ui.adapters.DishListAdapter
+import com.example.alfa_bank_android_app_teacher.ui.child.ChildActivity
 
 class EditDishActivity: AppCompatActivity() {
 
@@ -53,6 +59,8 @@ class EditDishActivity: AppCompatActivity() {
             layoutManager = gridLayoutManager
             false
         }
+
+        _binding.recyclerView2.isNestedScrollingEnabled = false
 
         val gridLayoutManager2 = GridLayoutManager(this, 2)
 
@@ -110,6 +118,25 @@ class EditDishActivity: AppCompatActivity() {
             adapter = dishListAdapter2
             layoutManager = gridLayoutManager2
             false
+        }
+
+        _binding.recyclerView3.isNestedScrollingEnabled = false
+    }
+
+    private fun initialize(){
+
+    }
+
+    companion object{
+
+        private const val Student = "Student"
+        private const val TypeMeal = "TypeMeal"
+        fun newIntent(packageContext: Context,student: Student,typeMeal: TypeMeal): Intent {
+            val intent = Intent(packageContext, EditDishActivity::class.java).apply {
+                putExtra(Student,student)
+                putExtra(TypeMeal,typeMeal)
+            }
+            return intent
         }
     }
 }
