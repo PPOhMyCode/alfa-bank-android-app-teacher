@@ -83,7 +83,7 @@
         android:layout_marginEnd="32dp"
         android:height="24sp"
         android:background="@android:color/transparent"
-        android:text="В связи с тем, что ребенок не употребляет пищу в столовой."
+        android:hint="Поле для ввода причины"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:gravity="top"

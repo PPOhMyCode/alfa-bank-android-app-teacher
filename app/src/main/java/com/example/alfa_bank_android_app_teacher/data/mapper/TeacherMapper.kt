@@ -1,5 +1,6 @@
 package com.example.alfa_bank_android_app_teacher.data.mapper
 
+import android.util.Log
 import com.example.alfa_bank_android_app_teacher.data.network.modelDto.ParentDto
 import com.example.alfa_bank_android_app_teacher.data.network.modelDto.SchoolClassDto
 import com.example.alfa_bank_android_app_teacher.data.network.modelDto.StudentDto
@@ -8,7 +9,6 @@ import com.example.alfa_bank_android_app_teacher.domain.entities.SchoolClass
 import com.example.alfa_bank_android_app_teacher.domain.entities.Student
 import com.example.alfa_bank_android_app_teacher.domain.entities.User
 import com.google.gson.Gson
-import kotlin.random.Random
 
 class TeacherMapper {
 
@@ -23,16 +23,17 @@ class TeacherMapper {
 
     fun mapStudentDtoToStudent(studentDto: StudentDto): Student {
         val isEat = true
+        Log.d("adfasdf",studentDto.Tags.toString())
         return Student(
             studentDto.ChildrenId.toString(),
-            studentDto.FirstName,
-            studentDto.SecondName,
+            studentDto.Name,
+            "",
             isIll = false,
-            isEatBreakfast = isEat,
-            isEatDinner = isEat,
-            isEatAfternoonSnack = isEat,
-            isChecked = false,
-            isNotEat = !isEat
+            isEatBreakfast = studentDto.Tags.contains("Завтрак"),
+            isEatDinner = studentDto.Tags.contains("Обед"),
+            isEatAfternoonSnack = studentDto.Tags.contains("Полдник"),
+            isChecked = studentDto.Presence,
+            isNotEat = studentDto.Tags.contains("Нет заказа")
         )
     }
 }

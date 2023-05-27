@@ -3,15 +3,16 @@ package com.example.alfa_bank_android_app_teacher.data.repository
 import android.app.appsearch.StorageInfo
 import android.content.Context
 import android.graphics.Insets.add
+import android.util.Log
 import android.widget.Toast
+import androidx.annotation.Nullable
 import com.example.alfa_bank_android_app_teacher.data.PreferencesImpl
 import com.example.alfa_bank_android_app_teacher.data.mapper.TeacherMapper
 import com.example.alfa_bank_android_app_teacher.data.network.ApiFactory
 import com.example.alfa_bank_android_app_teacher.data.network.modelDto.AuthorizeBodyDto
+import com.example.alfa_bank_android_app_teacher.data.network.modelDto.ReasonBody
 import com.example.alfa_bank_android_app_teacher.domain.Repository
-import com.example.alfa_bank_android_app_teacher.domain.entities.SchoolClass
-import com.example.alfa_bank_android_app_teacher.domain.entities.Student
-import com.example.alfa_bank_android_app_teacher.domain.entities.User
+import com.example.alfa_bank_android_app_teacher.domain.entities.*
 import retrofit2.HttpException
 
 class RepositoryImpl(var context:Context) : Repository {
@@ -34,35 +35,109 @@ class RepositoryImpl(var context:Context) : Repository {
         null
     }
 
-    override suspend fun loadSchoolClasses(): List<SchoolClass>? {
-        val id = PreferencesImpl(context).idUser
-        return apiService.loadSchoolClasses(id.toString()).map {
+    override suspend fun loadSchoolClasses(): List<SchoolClass>?  = try{
+
+        apiService.loadSchoolClasses(PreferencesImpl(context).idUser.toString()).map {
             mapper.mapSchoolClassDtoToSchoolClass(it)
         }
+    } catch (e:java.lang.Exception){
+        null
     }
 
-    override suspend fun loadStudents(grade:String): List<Student>? {
-        val students = apiService.loadStudents(grade).map {
+    override suspend fun loadStudents(grade:String,date: String): List<Student>?  = try{
+        Log.d("adfadfsaf",date+" "+grade)
+        val students = apiService.loadStudents(date,grade).map {
             mapper.mapStudentDtoToStudent(it)
-        }.toMutableList()
-        //TODO("Убрать")
-        students.add(
-            students.last().copy(
-                isEatBreakfast = false,
-                isEatDinner = false,
-                isEatAfternoonSnack = false,
-                isNotEat = true
-            )
+        }
+
+       students
+    } catch (e:java.lang.Exception){
+        null
+    }
+
+    override suspend fun confirmOrder(date: String, childrenId: String)  = try {
+        apiService.confirmOrder(date,childrenId)
+    } catch (e:java.lang.Exception){
+
+    }
+
+    override suspend fun cancelOrder(date: String, childrenId: String)  = try {
+        apiService.cancelOrder(date,childrenId)
+    } catch (e:java.lang.Exception){
+
+    }
+
+    override suspend fun loadChildDishes(date: String, childrenId: String): Int = try{
+        val a = apiService.loadChildDishes(date,childrenId)
+        Log.d("asdfasf",a.toString())
+        1
+    }catch (e:java.lang.Exception){
+        1
+    }
+
+    override suspend fun loadReason(date: String, childrenId: String, reason: String)  = try{
+        apiService.loadReason(childrenId,date, ReasonBody(reason))
+    }catch (e:Exception){
+
+    }
+
+    override suspend fun getReason(date: String, childrenId: String):String = try{
+       apiService.getReason(date,childrenId)[0]
+    }catch (e:java.lang.Exception){
+        ""
+    }
+
+    override suspend fun getChildMenu(date: String, childrenId: String): MenuDish = try {
+        val childMenuDto = apiService.getChildMenu(childrenId,date)
+
+
+        MenuDish(
+            breakfast = childMenuDto.breakfast.map{
+                Dish(
+                    id = 1,
+                    name = it.DishName,
+                    composition = "",
+                    weight = it.DishWeight.replace("г","").toFloat(),
+                    cost = it.DishCost.replace("р","").toFloat(),
+                    calories = 0f,
+                    squirrels = 0f,
+                    fat = 0f,
+                    carbohydrates = 0f,
+                    count = it.Count
+                )
+            },
+            dinner = childMenuDto.dinner.map {
+                Dish(
+                    id = 1,
+                    name = it.DishName,
+                    composition = "",
+                    weight = it.DishWeight.replace("г","").toFloat(),
+                    cost = it.DishCost.replace("р","").toFloat(),
+                    calories = 0f,
+                    squirrels = 0f,
+                    fat = 0f,
+                    carbohydrates = 0f,
+                    count = it.Count
+                )
+            },
+            snack = childMenuDto.snack.map {
+                Dish(
+                    id = 1,
+                    name = it.DishName,
+                    composition = "",
+                    weight = it.DishWeight.replace("г","").toFloat(),
+                    cost = it.DishCost.replace("р","").toFloat(),
+                    calories = 0f,
+                    squirrels = 0f,
+                    fat = 0f,
+                    carbohydrates = 0f,
+                    count = it.Count
+                )
+            }
         )
 
-        return students
-    }
-
-    override suspend fun confirmOrder(date: String, childrenId: String) {
-        apiService.confirmOrder(date,childrenId)
-    }
-
-    override suspend fun cancelOrder(date: String, childrenId: String) {
-        apiService.cancelOrder(date,childrenId)
+    }catch (e:Exception){
+        Log.d("afasfa",e.message.toString())
+        MenuDish()
     }
 }
