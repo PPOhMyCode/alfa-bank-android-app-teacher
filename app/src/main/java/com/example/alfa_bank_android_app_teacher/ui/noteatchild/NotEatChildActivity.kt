@@ -50,7 +50,7 @@ class NotEatChildActivity:AppCompatActivity() {
                     finish()
                 }
 
-                viewModel.loadReason("3",binding.editText.text.toString()) // TODO:изменить id
+                viewModel.loadReason(binding.editText.text.toString()) // TODO:изменить id
 
                 Toast.makeText(this,"Изменения успешно сохранены",Toast.LENGTH_SHORT).show()
             }
@@ -71,7 +71,7 @@ class NotEatChildActivity:AppCompatActivity() {
             binding.editText.text = it.toEditable()
         }
 
-        viewModel.getReason("3") //TODO:изменить id
+        viewModel.getReason() //TODO:изменить id
     }
 
     private fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)

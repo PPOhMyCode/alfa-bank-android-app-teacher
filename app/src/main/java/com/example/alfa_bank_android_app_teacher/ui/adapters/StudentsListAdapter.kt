@@ -1,6 +1,7 @@
 package com.example.alfa_bank_android_app_teacher.ui.adapters
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +11,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alfa_bank_android_app_teacher.R
+import com.example.alfa_bank_android_app_teacher.data.preferences.PreferencesUserImpl
+import com.example.alfa_bank_android_app_teacher.domain.entities.Child
 import com.example.alfa_bank_android_app_teacher.domain.entities.SchoolClass
 import com.example.alfa_bank_android_app_teacher.domain.entities.Student
 import com.google.android.material.card.MaterialCardView
 
-class StudentsListAdapter(var students: List<Student>) :
+class StudentsListAdapter(var students: List<Student>,var context:Context) :
     RecyclerView.Adapter<StudentsListAdapter.ItemHolder>() {
 
     var onItemClick: ((Student) -> Unit)? = null
@@ -53,6 +56,10 @@ class StudentsListAdapter(var students: List<Student>) :
 
 
             onItemClick?.invoke(student)
+            PreferencesUserImpl(context).userChild=
+                Child(student.id.toInt(),"","","","",0f)
+
+
 
             //students[position].isChecked = !student.isChecked
 

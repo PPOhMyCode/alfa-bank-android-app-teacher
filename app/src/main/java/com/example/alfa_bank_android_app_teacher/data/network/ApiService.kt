@@ -2,6 +2,7 @@ package com.example.alfa_bank_android_app_teacher.data.network
 
 import com.example.alfa_bank_android_app_teacher.data.network.modelDto.*
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -44,4 +45,16 @@ interface ApiService {
     @GET("/orders/date/{date}/children/{childrenId}")
     suspend fun getChildMenu(@Path("childrenId")childrenId:String,
                              @Path("date") date: String):ChildMenuContainerDto
+
+    @GET("/refactor/date/{date}/children/{childrenId}/type/{type}")
+    suspend fun getEditChildMenu(
+        @Path("childrenId") childrenId:String,
+        @Path("date") date: String,
+        @Path("type") type:Int):EditChildMenuContainerDto
+
+    @DELETE("/orders/delete")
+    suspend fun deleteDish(@Body sendDishBodyDto: SendDishBodyDto)
+
+    @POST("/orders")
+    suspend fun addDish(@Body sendDishBodyDto: SendDishBodyDto)
 }

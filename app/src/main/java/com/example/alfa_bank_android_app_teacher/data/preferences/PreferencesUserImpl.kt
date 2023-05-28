@@ -22,6 +22,7 @@ class PreferencesUserImpl(context: Context) : PreferencesUser() {
             value?.let { child ->
                 preferencesChild.edit().putBoolean("IS_CHILD_WAS_ADDED", true).apply()
                 with(preferencesChild.edit()) {
+                    putInt(ID,child.id).apply()
                     putString(FIRST_CHILD, child.firstName).apply()
                     putString(LAST_NAME, child.lastName).apply()
                     putString(SCHOOL_CLASS, child.schoolClass).apply()
@@ -64,7 +65,7 @@ class PreferencesUserImpl(context: Context) : PreferencesUser() {
         if (preferencesChild.getBoolean(IS_CHILD_WAS_ADDED, false)) {
             with(preferencesChild) {
                 return Child(
-                    0,
+                    getInt(ID,0),
                     getString(FIRST_CHILD, "") ?: "",
                     getString(LAST_NAME, "") ?: "",
                     getString(SCHOOL_CLASS, "") ?: "",
@@ -83,6 +84,7 @@ class PreferencesUserImpl(context: Context) : PreferencesUser() {
         const val LAST_NAME_USER = "LAST_NAME_USER"
         const val ID_USER = "ID_USER"
         const val URL= "URL"
+        const val ID ="ID"
         const val SHARED_PREFERENCES_AUTHORIZATION = "SHARED_PREFERENCES_AUTHORIZATION"
         const val SHARED_PREFERENCES_CHILD = "SHARED_PREFERENCES_CHILD"
         const val IS_CHILD_WAS_ADDED = "IS_CHILD_WAS_ADDED"

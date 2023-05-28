@@ -14,5 +14,5 @@ data class Dish(
     var squirrels:Float,
     var fat:Float,
     var carbohydrates:Float,
-    var count:Int= 0
+    var count:Int= 1
 ) : Parcelable

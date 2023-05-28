@@ -2,6 +2,7 @@ package com.example.alfa_bank_android_app_teacher.ui.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,7 @@ import com.squareup.picasso.Picasso
 
 class DishListAdapter(var mode:String) : RecyclerView.Adapter<DishListAdapter.ItemHolder>() {
     var dishes: List<Dish> = listOf()
-    var dishCount: Map<Int, Int> = mapOf()
+    //var dishCount: Map<Int, Int> = mapOf()
     var onAddItemClick: ((Dish) -> Unit)? = null
     var onDeleteItemClick: ((Dish) -> Unit)? = null
     var onImageItemClick: ((Dish) -> Unit)? = null
@@ -38,7 +39,7 @@ class DishListAdapter(var mode:String) : RecyclerView.Adapter<DishListAdapter.It
             //holder.dishImage
         }
             //TODO("Добавить count")
-        val count =  1
+        val count =  dishes[position].count
         if(count>0) {
             holder.deleteDish.visibility = View.VISIBLE
             if(count> 1){
@@ -58,31 +59,36 @@ class DishListAdapter(var mode:String) : RecyclerView.Adapter<DishListAdapter.It
             onImageItemClick?.invoke(dishes[position])
         }
         holder.addDish.setOnClickListener {
-            if((dishCount[dishes[position].id] ?: 0) <3){
-            onAddItemClick?.invoke(dishes[position])
-            holder.deleteDish.visibility = View.VISIBLE
-            if((dishCount[dishes[position].id] ?: 0) > 1){
-                holder.deleteDish.setImageResource(R.drawable.ic_minous)
-            }else{
-                holder.deleteDish.setImageResource(R.drawable.ic_trash)
-            }
-            holder.deleteDish.visibility = View.VISIBLE
-            holder.count.visibility = View.VISIBLE
-            holder.count.text="${dishCount[dishes[position].id]} шт"
+            if(dishes[position].count <3) {
+                onAddItemClick?.invoke(dishes[position])
+                holder.deleteDish.visibility = View.VISIBLE
+
+                if (mode != "mode3") {
+                    if (dishes[position].count > 1) {
+                        holder.deleteDish.setImageResource(R.drawable.ic_minous)
+                    } else {
+                        holder.deleteDish.setImageResource(R.drawable.ic_trash)
+                    }
+                    holder.deleteDish.visibility = View.VISIBLE
+                    holder.count.visibility = View.VISIBLE
+                    holder.count.text = "${dishes[position].count} шт"
+                }
             }
         }
         holder.deleteDish.setOnClickListener {
-            onDeleteItemClick?.invoke(dishes[position])
-            if((dishCount[dishes[position].id] ?: 0) > 1){
+
+            if(dishes[position].count-1 > 1){
                 holder.deleteDish.setImageResource(R.drawable.ic_minous)
             }else{
                 holder.deleteDish.setImageResource(R.drawable.ic_trash)
             }
-            if((dishCount[dishes[position].id] ?: 0) <=0) {
+            if(dishes[position].count-1 <=0) {
                 holder.deleteDish.visibility = View.INVISIBLE
                 holder.count.visibility = View.GONE
             }
-            holder.count.text="${dishCount[dishes[position].id]} шт"
+            holder.count.text="${dishes[position].count-1} шт"
+
+            onDeleteItemClick?.invoke(dishes[position])
         }
 
         //holder.count.visibility = View.VISIBLE
@@ -95,10 +101,12 @@ class DishListAdapter(var mode:String) : RecyclerView.Adapter<DishListAdapter.It
         if(mode == "mode3"){
             holder.deleteDish.visibility = View.GONE
             holder.addDish.visibility = View.VISIBLE
+            holder.count.visibility = View.GONE
         }
         if(mode == "mode2"){
             holder.deleteDish.visibility = View.VISIBLE
-            holder.addDish.visibility = View.GONE
+            holder.addDish.visibility = View.VISIBLE
+            holder.count.visibility = View.VISIBLE
         }
         //holder.countAndCostInformation.visibility = View.GONE
         //holder.addDish.visibility = View.GONE

@@ -62,6 +62,26 @@ class ChildActivity : AppCompatActivity() {
         _binding.imageViewBreakfast.visibility = View.VISIBLE
         _binding.recyclerView.visibility = View.VISIBLE
 
+        _binding.cardView2.setOnClickListener{
+            intent.getParcelableExtra<Student>(Student)?.let { student ->
+                intent.getParcelableExtra<SchoolClass>(SchoolClass)?.let { schoolClass ->
+                    val intent = EditDishActivity.newIntent(this, student, TypeMeal.BREAKFAST,schoolClass)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+
+        _binding.imageViewBreakfast.setOnClickListener {
+            intent.getParcelableExtra<Student>(Student)?.let { student ->
+                intent.getParcelableExtra<SchoolClass>(SchoolClass)?.let { schoolClass ->
+                    val intent = EditDishActivity.newIntent(this, student, TypeMeal.BREAKFAST,schoolClass)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+
         viewModel.breakfastDishes.observe(this){
             val gridLayoutManager = GridLayoutManager(this, 2)
             val adapter2 = DishListAdapter("mode1")
@@ -82,6 +102,27 @@ class ChildActivity : AppCompatActivity() {
         _binding.imageViewDinner.visibility = View.VISIBLE
         _binding.recyclerView2.visibility = View.VISIBLE
 
+
+        _binding.cardView3.setOnClickListener{
+            intent.getParcelableExtra<Student>(Student)?.let { student ->
+                intent.getParcelableExtra<SchoolClass>(SchoolClass)?.let { schoolClass ->
+                    val intent = EditDishActivity.newIntent(this, student, TypeMeal.DINNER,schoolClass)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+
+        _binding.imageViewDinner.setOnClickListener {
+            intent.getParcelableExtra<Student>(Student)?.let { student ->
+                intent.getParcelableExtra<SchoolClass>(SchoolClass)?.let { schoolClass ->
+                    val intent = EditDishActivity.newIntent(this, student, TypeMeal.DINNER,schoolClass)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+
         viewModel.breakfastDishes.observe(this){
             val gridLayoutManager = GridLayoutManager(this, 2)
             val adapter2 = DishListAdapter("mode1")
@@ -101,6 +142,29 @@ class ChildActivity : AppCompatActivity() {
         _binding.cardView4.visibility = View.VISIBLE
         _binding.imageViewSnack.visibility = View.VISIBLE
         _binding.recyclerView3.visibility = View.VISIBLE
+
+        _binding.cardView4.setOnClickListener{
+            intent.getParcelableExtra<Student>(Student)?.let { student ->
+                intent.getParcelableExtra<SchoolClass>(SchoolClass)?.let { schoolClass ->
+                    val intent = EditDishActivity.newIntent(this, student, TypeMeal.SNACK,schoolClass)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+
+        _binding.imageViewSnack.setOnClickListener {
+            intent.getParcelableExtra<Student>(Student)?.let { student ->
+                intent.getParcelableExtra<SchoolClass>(SchoolClass)?.let { schoolClass ->
+                    val intent = EditDishActivity.newIntent(this, student, TypeMeal.SNACK,schoolClass)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+
+
+
 
         viewModel.breakfastDishes.observe(this){
             val gridLayoutManager = GridLayoutManager(this, 2)

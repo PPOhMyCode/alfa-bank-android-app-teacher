@@ -11,6 +11,7 @@ import com.example.alfa_bank_android_app_teacher.data.mapper.TeacherMapper
 import com.example.alfa_bank_android_app_teacher.data.network.ApiFactory
 import com.example.alfa_bank_android_app_teacher.data.network.modelDto.AuthorizeBodyDto
 import com.example.alfa_bank_android_app_teacher.data.network.modelDto.ReasonBody
+import com.example.alfa_bank_android_app_teacher.data.network.modelDto.SendDishBodyDto
 import com.example.alfa_bank_android_app_teacher.domain.Repository
 import com.example.alfa_bank_android_app_teacher.domain.entities.*
 import retrofit2.HttpException
@@ -139,5 +140,60 @@ class RepositoryImpl(var context:Context) : Repository {
     }catch (e:Exception){
         Log.d("afasfa",e.message.toString())
         MenuDish()
+    }
+
+    override suspend fun getEditChildMenu(
+        date: String,
+        childrenId: String,
+        type: String
+    ): EditChildMenu = try{
+
+        val editChildMenu = apiService.getEditChildMenu(childrenId, date, 1)
+
+        EditChildMenu(
+            orders = editChildMenu.orders.map {
+                Dish(
+                    id = it.dishId,
+                    name = it.dishName,
+                    composition = "",
+                    weight = it.dishWeight.replace("г","").replace("мл","").toFloat(),
+                    cost = it.dishCost.replace("р","").toFloat(),
+                    calories = 0f,
+                    squirrels = 0f,
+                    fat = 0f,
+                    carbohydrates = 0f,
+                    count = it.count
+                )
+            },
+            menu = editChildMenu.menu.map {
+                Dish(
+                    id = it.dishId,
+                    name = it.dishName,
+                    composition = "",
+                    weight =  it.dishWeight.replace("г","").replace("мл","").toFloat(),
+                    cost = it.dishCost.replace("р","").toFloat(),
+                    calories = 0f,
+                    squirrels = 0f,
+                    fat = 0f,
+                    carbohydrates = 0f,
+                    count = 1
+                )
+            }
+        )
+    }catch (e:Exception){
+        Log.d("adgadsf",e.message.toString())
+        EditChildMenu()
+    }
+
+    override suspend fun deleteDish(date: String, childrenId: Int, typeMeal: Int, dishId: Int) = try {
+        apiService.deleteDish(SendDishBodyDto(date,childrenId,typeMeal,dishId))
+    } catch (e:Exception){
+
+    }
+
+    override suspend fun addDish(date: String, childrenId: Int, typeMeal: Int, dishId: Int)= try {
+        apiService.addDish(SendDishBodyDto(date,childrenId,typeMeal,dishId))
+    } catch (e:Exception){
+
     }
 }

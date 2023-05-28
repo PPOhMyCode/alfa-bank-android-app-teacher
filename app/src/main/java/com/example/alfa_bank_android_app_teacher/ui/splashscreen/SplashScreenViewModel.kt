@@ -6,4 +6,5 @@ import com.example.alfa_bank_android_app_teacher.data.preferences.PreferencesUse
 
 class SplashScreenViewModel(application: Application) : AndroidViewModel(application) {
     val preferences = PreferencesUserImpl(application.applicationContext)
+
 }

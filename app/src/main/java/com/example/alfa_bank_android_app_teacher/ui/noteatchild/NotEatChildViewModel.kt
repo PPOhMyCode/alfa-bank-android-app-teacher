@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.alfa_bank_android_app_teacher.data.preferences.PreferencesUserImpl
 import com.example.alfa_bank_android_app_teacher.data.repository.RepositoryImpl
 import com.example.alfa_bank_android_app_teacher.domain.GetReasonUseCase
 import com.example.alfa_bank_android_app_teacher.domain.LoadReasonUseCase
@@ -23,15 +24,17 @@ class NotEatChildViewModel(application: Application) : AndroidViewModel(applicat
     private val newDate = date[2]+"-"+date[1]+"-"+date[0]
 
 
-    fun loadReason(childId:String, reason:String){
+    val childId = PreferencesUserImpl(application).userChild?.id
+
+    fun loadReason( reason:String){
         viewModelScope.launch {
-            loadReasonUseCase.invoke(data = "2023-05-26", childId = childId, reason = reason)//TODO:поменять обратно дату
+            loadReasonUseCase.invoke(data = "2023-05-26", childId = "3", reason = reason)//TODO:поменять обратно дату
         }
     }
 
-    fun getReason(childId:String){
+    fun getReason(){
         viewModelScope.launch {
-            val a = getReasonUseCase.invoke(date = childId, childrenId = "2023-05-26") //TODO:поменять обратно дату
+            val a = getReasonUseCase.invoke(date = "3", childrenId = "2023-05-26") //TODO:поменять обратно дату
            text.value = a
         }
     }

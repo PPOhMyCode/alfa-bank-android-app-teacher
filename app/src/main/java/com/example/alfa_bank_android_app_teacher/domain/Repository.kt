@@ -1,10 +1,7 @@
 package com.example.alfa_bank_android_app_teacher.domain
 
 import androidx.annotation.Nullable
-import com.example.alfa_bank_android_app_teacher.domain.entities.MenuDish
-import com.example.alfa_bank_android_app_teacher.domain.entities.User
-import com.example.alfa_bank_android_app_teacher.domain.entities.SchoolClass
-import com.example.alfa_bank_android_app_teacher.domain.entities.Student
+import com.example.alfa_bank_android_app_teacher.domain.entities.*
 
 interface Repository {
 
@@ -25,4 +22,10 @@ interface Repository {
     suspend fun getReason(date:String, childrenId: String):String
 
     suspend fun getChildMenu(date:String, childrenId: String):MenuDish
+
+    suspend fun getEditChildMenu(date:String, childrenId: String,type:String):EditChildMenu
+
+    suspend fun deleteDish( date:String, childrenId:Int, typeMeal: Int, dishId: Int)
+
+    suspend fun addDish(date:String, childrenId:Int, typeMeal: Int, dishId: Int)
 }

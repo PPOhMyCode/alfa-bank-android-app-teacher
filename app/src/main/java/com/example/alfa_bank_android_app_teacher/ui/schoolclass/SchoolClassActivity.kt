@@ -71,7 +71,7 @@ class SchoolClassActivity : AppCompatActivity() {
     }
 
     private fun initializeRecyclerView(students: List<Student>) {
-        val studentsListAdapter = StudentsListAdapter(students)
+        val studentsListAdapter = StudentsListAdapter(students,this)
 
         studentsListAdapter.onCheckBoxClick = {isEat, student ->
             if(isEat){
